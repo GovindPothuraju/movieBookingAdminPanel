@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Plus, X } from "lucide-react";
 
 import { getTheaters, getDeletedTheaters, reactivateTheater } from "../services/theaterService";
@@ -8,7 +8,7 @@ import TheaterForm from "../componenets/theaters/TheaterForm";
 import TheaterDetails from "../componenets/theaters/TheaterDetails";
 import DeleteTheaterModal from "../componenets/theaters/DeleteTheaterModal";
 
-const LIMIT_OPTIONS = [10, 20, 30, 50];
+const LIMIT = 10;
 
 const Theaters = () => {
   const [tab, setTab] = useState("active"); // "active" | "deleted"
@@ -20,7 +20,6 @@ const Theaters = () => {
 
   const [city, setCity] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
 
   const [open, setOpen] = useState(false);
   const [selectedTheater, setSelectedTheater] = useState(null);
@@ -31,34 +30,46 @@ const Theaters = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteTheater, setDeleteTheater] = useState(null);
 
-  const fetchTheaters = async () => {
+  // Guards against out-of-order responses: only the response from the
+  // *latest* request is allowed to update state.
+  const requestId = useRef(0);
+
+  const fetchTheaters = async (cityValue) => {
+    const currentRequest = ++requestId.current;
+
     try {
       setLoading(true);
-      const service =
-        tab === "deleted"
-          ? getDeletedTheaters
-          : getTheaters;
+      const service = tab === "deleted" ? getDeletedTheaters : getTheaters;
 
       const data = await service({
         page,
-        limit,
-        city,
+        limit: LIMIT,
+        city: cityValue,
       });
+
+      // Ignore this response if a newer request has since been fired
+      if (currentRequest !== requestId.current) return;
 
       setTheaters(data.data);
       setPagination(data.pagination);
-
     } catch (err) {
+      if (currentRequest !== requestId.current) return;
       console.error(err);
     } finally {
-      setLoading(false);
+      if (currentRequest === requestId.current) setLoading(false);
     }
   };
 
+  // Debounce the city filter so we don't fire a request per keystroke
   useEffect(() => {
-    fetchTheaters();
-  }, [page, limit, city, tab]);
-    const switchTab = (newTab) => {
+    const timer = setTimeout(() => {
+      fetchTheaters(city);
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [page, city, tab]);
+
+  const switchTab = (newTab) => {
     setTab(newTab);
     setPage(1);
   };
@@ -102,7 +113,7 @@ const Theaters = () => {
     try {
       const response = await reactivateTheater(theater._id);
       alert(response.message);
-      fetchTheaters();
+      fetchTheaters(city);
     } catch (err) {
       console.log(err.response?.data);
       alert(err.response?.data?.message || "Failed to reactivate theater");
@@ -173,21 +184,6 @@ const Theaters = () => {
           className="w-full rounded-xl border border-border-light p-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15 md:w-64"
         />
 
-        <select
-          value={limit}
-          onChange={(e) => {
-            setLimit(Number(e.target.value));
-            setPage(1);
-          }}
-          className="rounded-xl border border-border-light p-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15 md:w-40"
-        >
-          {LIMIT_OPTIONS.map((l) => (
-            <option key={l} value={l}>
-              {l} per page
-            </option>
-          ))}
-        </select>
-
         {city && (
           <button
             onClick={() => {
@@ -256,7 +252,7 @@ const Theaters = () => {
             <TheaterForm
               initialData={selectedTheater}
               onClose={handleCloseForm}
-              refreshTheaters={fetchTheaters}
+              refreshTheaters={() => fetchTheaters(city)}
             />
           </div>
         </div>
@@ -268,7 +264,7 @@ const Theaters = () => {
         <DeleteTheaterModal
           theater={deleteTheater}
           onClose={handleCloseDelete}
-          refreshTheaters={fetchTheaters}
+          refreshTheaters={() => fetchTheaters(city)}
         />
       )}
 

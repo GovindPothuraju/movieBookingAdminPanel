@@ -12,6 +12,7 @@ import Movies from "./pages/Movies";
 import Bookings from "./pages/Bookings";
 import Profile from "./pages/Profile";
 import Shows from "./pages/Shows";
+import ManageScreens from "./pages/ManageScreens";
 function App() {
   return (
     <>
@@ -22,11 +23,12 @@ function App() {
             <Route element={<Body />}>
               <Route path="/dashboard" element={<DashBoard />} />
               <Route path="/movies" element={<Movies />} />
-              <Route path="/theaters" element={<Theaters />} />
-              <Route path="/screens" element={<Screens />} />
+              <Route path="/admin/theaters" element={<Theaters />} />
+              <Route path="/admin/screens" element={<Screens />} />
               <Route path="/bookings" element={<Bookings />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/shows" element={<Shows/>}/>
+              <Route path="/admin/theaters/:theaterId/screens" element={<ManageScreens />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>

@@ -19,8 +19,8 @@ import { NavLink } from "react-router-dom";
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
   { name: "Movies", icon: Film, path: "/movies" },
-  { name: "Theaters", icon: Building2, path: "/theaters" },
-  { name: "Screens", icon: Monitor, path: "/screens" },
+  { name: "Theaters", icon: Building2, path: "/admin/theaters" },
+  { name: "Screens", icon: Monitor, path: "/admin/screens" },
   { name: "Shows", icon: CalendarClock, path: "/shows" },
   { name: "Bookings", icon: Ticket, path: "/bookings" },
   { name: "Live Seats", icon: Activity, path: "/live-seats" },
