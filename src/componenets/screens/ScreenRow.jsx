@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const ScreenRow = ({ screen, onView, onEdit, onDelete }) => {
-  const totalSeats = screen.totalSeats ?? (screen.rows && screen.columns ? screen.rows * screen.columns : "—");
+  const navigate = useNavigate();
 
   return (
     <tr className="border-b border-border-light">
@@ -8,23 +10,14 @@ const ScreenRow = ({ screen, onView, onEdit, onDelete }) => {
         {screen.name}
       </td>
 
-      <td className="px-4 py-4 text-text-gray">
-        <div className="flex flex-col">
-          <span>{totalSeats} seats</span>
-          <span className="text-xs text-text-gray/70">{screen.rows} × {screen.columns}</span>
-        </div>
-      </td>
-
       <td className="px-4 py-4">
         <span className="rounded-full bg-primary-light px-2.5 py-1 text-xs font-medium text-primary">
           {screen.screenType}
         </span>
       </td>
 
-      <td className="px-4 py-4">
-        <span className="rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700">
-          Active
-        </span>
+      <td className="px-4 py-4 text-text-gray">
+        {screen.totalSeats ?? "—"}
       </td>
 
       <td className="px-4 py-4">
@@ -33,6 +26,10 @@ const ScreenRow = ({ screen, onView, onEdit, onDelete }) => {
 
           <button onClick={() => onView(screen)} className="rounded-lg border border-border-light px-3 py-1.5 text-sm font-semibold text-heading transition hover:border-primary hover:text-primary">
             View
+          </button>
+
+          <button onClick={() => navigate(`/screens/${screen._id}/seats`)} className="rounded-lg border border-border-light px-3 py-1.5 text-sm font-semibold text-heading transition hover:border-primary hover:text-primary">
+            Seats
           </button>
 
           <button onClick={() => onEdit(screen)} className="rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white">

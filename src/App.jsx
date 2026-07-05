@@ -13,6 +13,7 @@ import Bookings from "./pages/Bookings";
 import Profile from "./pages/Profile";
 import Shows from "./pages/Shows";
 import ManageScreens from "./pages/ManageScreens";
+import ManageSeats from "./pages/ManageSeats";
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/shows" element={<Shows/>}/>
               <Route path="/admin/theaters/:theaterId/screens" element={<ManageScreens />} />
+              <Route path="/screens/:screenId/seats" element={<ManageSeats />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>

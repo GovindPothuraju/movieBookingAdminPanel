@@ -15,11 +15,12 @@ const ScreenTable = ({ screens, onView, onEdit, onDelete }) => {
             </th>
 
             <th className="px-4 py-4 text-left">
-              Seats / Layout
+              Screen Type
             </th>
 
+
             <th className="px-4 py-4 text-left">
-              Screen Type
+              Seats / Layout
             </th>
 
             <th className="px-4 py-4 text-left">
