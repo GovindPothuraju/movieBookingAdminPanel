@@ -46,7 +46,7 @@ const AllScreensRow = ({ screen }) => {
 
       <td className="px-4 py-4 text-right">
         <button
-          onClick={() => navigate(`/admin/screens/${screen._id}/seats`)}
+          onClick={() => navigate(`/screens/${screen._id}/seats`)}
           className="flex items-center gap-1.5 rounded-lg border border-border-light px-3 py-1.5 text-sm font-semibold text-heading transition hover:border-primary hover:text-primary"
         >
           <Monitor size={14} />

@@ -105,3 +105,11 @@ export const getAllScreens = async ({ page = 1, limit = 10, search = "" }) => {
 
   return response.data;
 };
+
+
+export const getScreensForTheater = async (theaterId) => {
+  const response = await axios.get(`${BASE_URL}/theaters/${theaterId}/screens`, {
+    withCredentials: true,
+  });
+  return response.data;
+}
