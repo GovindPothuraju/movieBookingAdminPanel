@@ -4,7 +4,6 @@ import axios from "axios";
 import { getTheaters } from "../../services/theaterService";
 import { getScreensForTheater } from "../../services/screenService";
 import { getSeatLayout } from "../../services/seatService";
-import { getMovies } from "../../services/movieService";
 import { createShow } from "../../services/showService";
 
 const BASE_URL = "https://moviebookingbackend-icoh.onrender.com";
