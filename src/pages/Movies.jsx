@@ -12,10 +12,10 @@ const GENRE_OPTIONS = ["ACTION", "DRAMA", "COMEDY", "THRILLER", "ROMANCE", "HORR
 const LANGUAGE_OPTIONS = ["TELUGU", "HINDI", "TAMIL", "MALAYALAM", "KANNADA", "ENGLISH"];
 
 const Movies = () => {
+  const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [pagination, setPagination] = useState({});
 
-  const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
