@@ -5,12 +5,7 @@ import {
   Film,
   CalendarClock,
   Ticket,
-  Activity,
-  BarChart3,
-  ClipboardList,
-  Bell,
   User,
-  Settings,
   Clapperboard,
 } from "lucide-react";
 
@@ -23,12 +18,7 @@ const menuItems = [
   { name: "Screens", icon: Monitor, path: "/admin/screens" },
   { name: "Shows", icon: CalendarClock, path: "/shows" },
   { name: "Bookings", icon: Ticket, path: "/bookings" },
-  { name: "Live Seats", icon: Activity, path: "/live-seats" },
-  { name: "Analytics", icon: BarChart3, path: "/analytics" },
-  { name: "Audit Logs", icon: ClipboardList, path: "/audit-logs" },
-  { name: "Notifications", icon: Bell, path: "/notifications" },
-  { name: "Profile", icon: User, path: "/profile" },
-  { name: "Settings", icon: Settings, path: "/settings" },
+  { name: "Profile", icon: User, path: "/profile" }
 ];
 
 const SideBar = ({ open }) => {
@@ -49,7 +39,7 @@ const SideBar = ({ open }) => {
 
       <div
         className={`
-          h-20
+          h-21
           border-b
           flex
           items-center
