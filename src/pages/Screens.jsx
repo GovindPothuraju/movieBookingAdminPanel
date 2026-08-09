@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 import { getAllScreens } from "../services/screenService";
-import AllScreensTable from "../componenets/screens/AllScreensTable";
+import AllScreensTable from "../../src/componenets/screens/Allscreenstable";
 
 const LIMIT_OPTIONS = [10, 20, 30, 50];
 
